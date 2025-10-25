@@ -1,0 +1,11 @@
+{
+    "borderThickness": 3,
+    "borderRounding": 4,
+
+    "fontFamily": "JetBrainsMono Nerd Font",
+    "fontSizeLarge": 24,
+    "fontSizeLarger": 20,
+    "fontSizeNormal": 16,
+    "fontSizeSmaller": 12,
+    "fontSizeSmall": 10
+}
