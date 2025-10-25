@@ -2,7 +2,6 @@
   description = "Quickshell packages and configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     quickshell.url = "github:quickshell-mirror/quickshell";
   };
 
@@ -13,7 +12,7 @@
     }:
     {
       # Expose the config path
-      configPath = ./duckshell;
+      configPath = ./.;
 
       homeManagerModules.default =
         {
