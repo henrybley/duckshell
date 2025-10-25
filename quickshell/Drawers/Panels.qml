@@ -19,7 +19,6 @@ Item {
 
     required property ShellScreen screen
     required property PersistentProperties visibilities
-    required property Item bar
 
     readonly property AudioPanel.Wrapper audio: audio
     readonly property ClockPanel.Wrapper clock: clock
@@ -34,8 +33,8 @@ Item {
 
     anchors.fill: parent
     anchors.margins: Config.style.borderThickness
-    anchors.leftMargin: bar.implicitWidth
-    
+    anchors.leftMargin: 0
+
     AudioPanel.Wrapper {
         id: audio
 
@@ -102,40 +101,5 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
     }
-
-    /*Dashboard.Wrapper {
-        id: dashboard
-
-        visibilities: root.visibilities
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-    }*/
-
-    BarPopouts.Wrapper {
-        id: popouts
-
-        screen: root.screen
-
-        x: isDetached ? (root.width - nonAnimWidth) / 2 : 0
-        y: {
-            if (true || isDetached)
-                return (root.height - nonAnimHeight) / 2;
-
-            const off = currentCenter - Config.style.borderThickness - nonAnimHeight / 2;
-            const diff = root.height - Math.floor(off + nonAnimHeight);
-            if (diff < 0)
-                return off + diff;
-            return off;
-        }
-    }
-
-    /*Utilities.Wrapper {
-        id: utilities
-
-        visibility: root.visibilities.utilities
-
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-    }*/
+    
 }

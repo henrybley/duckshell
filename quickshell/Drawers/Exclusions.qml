@@ -9,11 +9,9 @@ Scope {
     id: root
 
     required property ShellScreen screen
-    required property Item bar
 
     ExclusionZone {
         anchors.left: true
-        exclusiveZone: root.bar.exclusiveZone
     }
 
     ExclusionZone {

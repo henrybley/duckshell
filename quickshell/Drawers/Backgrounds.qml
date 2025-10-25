@@ -16,11 +16,10 @@ Shape {
     id: root
 
     required property Panels panels
-    required property Item bar
 
     anchors.fill: parent
     anchors.margins: Config.style.borderThickness
-    anchors.leftMargin: bar.implicitWidth
+    anchors.leftMargin: 0
     preferredRendererType: Shape.CurveRenderer
     opacity: Config.colours.transparency.enabled ? Config.colours.transparency.base : 1
 

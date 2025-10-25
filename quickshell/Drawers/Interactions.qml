@@ -12,7 +12,6 @@ MouseArea {
     required property BarPopouts.Wrapper popouts
     required property PersistentProperties visibilities
     required property Panels panels
-    required property Item bar
 
     property bool audioHovered
     property point dragStart
@@ -21,17 +20,15 @@ MouseArea {
     property bool utilitiesShortcutActive
 
     function withinPanelHeight(panel: Item, x: real, y: real): bool {
-        const panelY = Config.style.borderThickness + panel.y;
-        return y >= panelY - Config.style.borderRounding && y <= panelY + panel.height + Config.style.borderRounding;
+        return y >= panel.y - Config.style.borderRounding && y <= panelY + panel.height + Config.style.borderRounding;
     }
 
     function withinPanelWidth(panel: Item, x: real, y: real): bool {
-        const panelX = bar.implicitWidth + panel.x;
-        return x >= panelX - Config.style.borderRounding && x <= panelX + panel.width + Config.style.borderRounding;
+        return x >= panel.x - Config.style.borderRounding && x <= panelX + panel.width + Config.style.borderRounding;
     }
 
     function inRightPanel(panel: Item, x: real, y: real): bool {
-        return x > bar.implicitWidth + panel.x && withinPanelHeight(panel, x, y);
+        return x > Config.style.borderThickness + panel.x && withinPanelHeight(panel, x, y);
     }
 
     function inTopPanel(panel: Item, x: real, y: real): bool {
