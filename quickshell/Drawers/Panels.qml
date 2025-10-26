@@ -1,15 +1,13 @@
 import qs.Services
 import qs.Config
 import qs.Modules.Audio as AudioPanel
-import qs.Modules.Clock as ClockPanel
-import qs.Modules.Date as DatePanel
+import qs.Modules.DateTime as DateTimePanel
 import qs.Modules.Launcher as Launcher
 import qs.Modules.Workspace as WorkspacePanel
 import qs.Modules.Session
 import qs.Modules.Notifications as Notifications
 /*import qs.modules.launcher as Launcher
 import qs.modules.dashboard as Dashboard*/
-import qs.Modules.Bar.Popouts as BarPopouts
 import qs.Modules.Utilities
 import Quickshell
 import QtQuick
@@ -21,11 +19,9 @@ Item {
     required property PersistentProperties visibilities
 
     readonly property AudioPanel.Wrapper audio: audio
-    readonly property ClockPanel.Wrapper clock: clock
-    readonly property DatePanel.Wrapper date: date
+    readonly property DateTimePanel.Wrapper date_time: date_time
     readonly property WorkspacePanel.Wrapper workspace: workspace
     readonly property Session session: session
-    readonly property BarPopouts.Wrapper popouts: popouts
     readonly property Launcher.Wrapper launcher: launcher
     readonly property Notifications.Wrapper notifications: notifications
     /*readonly property Dashboard.Wrapper dashboard: dashboard
@@ -48,8 +44,8 @@ Item {
         anchors.rightMargin: session.width
     }
 
-    ClockPanel.Wrapper {
-        id: clock
+    DateTimePanel.Wrapper {
+        id: date_time
 
         screen: root.screen
         //todo don't hardcode this
@@ -57,7 +53,8 @@ Item {
         visibility: true
 
         anchors.right: parent.right
-        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -6
     }
 
     

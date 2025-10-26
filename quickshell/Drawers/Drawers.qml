@@ -3,7 +3,6 @@ pragma ComponentBehavior: Bound
 import qs.Components
 import qs.Services
 import qs.Config
-import qs.Modules.Bar
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
@@ -115,7 +114,6 @@ Variants {
 
             Interactions {
                 screen: scope.modelData
-                popouts: panels.popouts
                 visibilities: visibilities
                 panels: panels
 

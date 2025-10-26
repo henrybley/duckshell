@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Io
 import qs.Config
@@ -111,7 +110,7 @@ Item {
     Row {
         id: pillRow
         spacing: spacingBetweenPills
-        anchors.verticalCenter: workspaceBackground.verticalCenter
+        //anchors.verticalCenter: root.verticalCenter
         width: root.width - horizontalPadding * 2
         x: horizontalPadding
         Repeater {

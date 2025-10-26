@@ -2,12 +2,8 @@ import qs.Services
 import qs.Config
 import qs.Modules.Audio as AudioPanel
 import qs.Modules.Workspace as WorkspacePanel
-import qs.Modules.Clock as ClockPanel
+import qs.Modules.DateTime as DateTimePanel
 import qs.Modules.Launcher as Launcher
-//import qs.Modules.Notifications as Notifications
-/*import qs.modules.session as Session
-import qs.modules.dashboard as Dashboard*/
-import qs.Modules.Bar.Popouts as BarPopouts
 import qs.Modules.Utilities
 import QtQuick
 import QtQuick.Shapes
@@ -38,12 +34,12 @@ Shape {
         startY: 0
     }
     
-    ClockPanel.Background {
-        wrapper: panels.clock
+    /*DateTimePanel.Background {
+        wrapper: panels.date_time
         
         startX: root.width
         startY: 0
-    }
+    }*/
     
     Launcher.Background {
         wrapper: panels.launcher
@@ -73,14 +69,6 @@ Shape {
 
         startX: (root.width - audio.width) / 2 - rounding
         startY: 0
-    }
-
-    BarPopouts.Background {
-        wrapper: panels.popouts
-        invertBottomRounding: audio.y + audio.height + 1 >= root.height
-
-        startX: audio.x
-        startY: audio.y - rounding * sideRounding
     }
 
     Utilities.Background {

@@ -1,6 +1,5 @@
 import qs.Services
 import qs.Config
-import qs.Modules.Bar.Popouts as BarPopouts
 import qs.Modules.Audio as AudioPanel
 import Quickshell
 import QtQuick
@@ -9,7 +8,6 @@ MouseArea {
     id: root
 
     required property ShellScreen screen
-    required property BarPopouts.Wrapper popouts
     required property PersistentProperties visibilities
     required property Panels panels
 
@@ -57,32 +55,17 @@ MouseArea {
             if (!utilitiesShortcutActive)
                 visibilities.utilities = false;
 
-            if (!popouts.currentName.startsWith("traymenu"))
-                popouts.hasCurrent = false;
-
-            bar.isHovered = false;
+            /*if (!popouts.currentName.startsWith("traymenu"))
+             popouts.hasCurrent = false;*/
         }
     }
 
     onPositionChanged: event => {
-        if (popouts.isDetached)
-            return;
+        /*if (popouts.isDetached)
+         return;*/
 
         const x = event.x;
         const y = event.y;
-
-        // Show bar in non-exclusive mode on hover
-        if (!visibilities.bar && x < bar.implicitWidth)
-            bar.isHovered = true;
-
-        // Show/hide bar on drag
-        if (pressed && dragStart.x < bar.implicitWidth) {
-            const dragX = x - dragStart.x;
-            if (dragX > Config.bar.dragThreshold)
-                visibilities.bar = true;
-            else if (dragX < -Config.bar.dragThreshold)
-                visibilities.bar = false;
-        }
 
         // Show audio on hover
         const showAudioPanel = inRightPanel(panels.audio, x, y);
@@ -96,59 +79,6 @@ MouseArea {
             audioShortcutActive = false;
             audioHovered = true;
         }
-
-        // Show/hide session on drag
-        /*if (pressed && inRightPanel(panels.session, dragStart.x, dragStart.y) && withinPanelHeight(panels.session, x, y)) {
-            const dragX = x - dragStart.x;
-            if (dragX < -Config.session.dragThreshold)
-                visibilities.session = true;
-            else if (dragX > Config.session.dragThreshold)
-                visibilities.session = false;
-            }*/
-
-        // Show/hide launcher on drag
-        /*if (pressed && inBottomPanel(panels.launcher, dragStart.x, dragStart.y) && withinPanelWidth(panels.launcher, x, y)) {
-            const dragY = y - dragStart.y;
-            if (dragY < -Config.launcher.dragThreshold)
-                visibilities.launcher = true;
-            else if (dragY > Config.launcher.dragThreshold)
-                visibilities.launcher = false;
-            }*/
-
-        // Show dashboard on hover
-        //const showDashboard = inTopPanel(panels.dashboard, x, y);
-
-        // Always update visibility based on hover if not in shortcut mode
-        /*if (!dashboardShortcutActive) {
-            visibilities.dashboard = showDashboard;
-        } else if (showDashboard) {
-            // If hovering over dashboard area while in shortcut mode, transition to hover control
-            dashboardShortcutActive = false;
-        }*/
-
-        // Show/hide dashboard on drag (for touchscreen devices)
-        /*if (pressed && inTopPanel(panels.dashboard, dragStart.x, dragStart.y) && withinPanelWidth(panels.dashboard, x, y)) {
-            const dragY = y - dragStart.y;
-            if (dragY > Config.dashboard.dragThreshold)
-                visibilities.dashboard = true;
-            else if (dragY < -Config.dashboard.dragThreshold)
-                visibilities.dashboard = false;
-            }*/
-
-        // Show utilities on hover
-        //const showUtilities = inBottomPanel(panels.utilities, x, y);
-
-        // Always update visibility based on hover if not in shortcut mode
-        /*if (!utilitiesShortcutActive) {
-            visibilities.utilities = showUtilities;
-        } else if (showUtilities) {
-            // If hovering over utilities area while in shortcut mode, transition to hover control
-            utilitiesShortcutActive = false;
-        }*/
-
-        // Show popouts on hover
-        if (x < bar.implicitWidth)
-            bar.checkPopout(y);
     }
 
     // Monitor individual visibility changes
