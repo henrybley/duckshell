@@ -3,7 +3,6 @@ pragma ComponentBehavior: Bound
 import qs.Components
 import qs.Services
 import qs.Config
-import qs.Modules.Bar
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
@@ -20,7 +19,6 @@ Variants {
 
         Exclusions {
             screen: scope.modelData
-            bar: bar
         }
 
         StyledWindow {
@@ -34,7 +32,7 @@ Variants {
             mask: Region {
                 x: Config.style.borderThickness 
                 y: Config.style.borderThickness 
-                width: win.width - bar.implicitWidth - Config.style.borderThickness
+                width: win.width - Config.style.borderThickness
                 height: win.height - Config.style.borderThickness * 2
                 intersection: Intersection.Xor
 
@@ -54,7 +52,7 @@ Variants {
                 Region {
                     required property Item modelData
 
-                    x: modelData.x + bar.implicitWidth
+                    x: modelData.x 
                     y: modelData.y + Config.style.borderThickness 
                     width: modelData.width
                     height: modelData.height
@@ -95,19 +93,16 @@ Variants {
                 }
 
                 Border {
-                    bar: bar
                 }
 
                 Backgrounds {
                     panels: panels
-                    bar: bar
                 }
             }
 
             PersistentProperties {
                 id: visibilities
 
-                property bool bar
                 property bool audio
                 property bool session
                 property bool launcher
@@ -119,29 +114,15 @@ Variants {
 
             Interactions {
                 screen: scope.modelData
-                popouts: panels.popouts
                 visibilities: visibilities
                 panels: panels
-                bar: bar
 
                 Panels {
                     id: panels
 
                     screen: scope.modelData
                     visibilities: visibilities
-                    bar: bar
                 }
-            }
-
-            BarWrapper {
-                id: bar
-
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-
-                screen: scope.modelData
-                visibilities: visibilities
-                popouts: panels.popouts
             }
         }
     }

@@ -64,6 +64,13 @@ Item {
         }
     ]
 
+
+    Background {
+        contentWidth: content.width
+        contentHeight: content.height
+    }
+
+    
     Content {
         id: content
     }

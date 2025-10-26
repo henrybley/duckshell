@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import qs.Modules.Drawers
+import qs.Drawers
 import qs.Modules
 
 ShellRoot {
