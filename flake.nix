@@ -22,7 +22,7 @@
       in
       {
         packages.default = quickshell.packages.${system}.default;
-        
+
         packages.duckshell = pkgs.symlinkJoin {
           name = "duckshell";
           paths = [
@@ -30,11 +30,14 @@
             pkgs.qt6.qtbase
             pkgs.qt6.qtdeclarative
             pkgs.qt6.qtwayland
+            pkgs.app2unit
           ];
           buildInputs = [ pkgs.makeWrapper ];
           postBuild = ''
             wrapProgram $out/bin/quickshell \
-              --prefix QML_IMPORT_PATH : "${quickshell.packages.${system}.default}/lib/qt-6/qml:${pkgs.qt6.qtbase}/lib/qt-6/qml" \
+              --prefix QML_IMPORT_PATH : "${
+                quickshell.packages.${system}.default
+              }/lib/qt-6/qml:${pkgs.qt6.qtbase}/lib/qt-6/qml" \
               --prefix QT_PLUGIN_PATH : "${pkgs.qt6.qtbase}/lib/qt-6/plugins"
           '';
         };
@@ -45,10 +48,13 @@
             pkgs.qt6.qtbase
             pkgs.qt6.qtdeclarative
             pkgs.qt6.qtwayland
+            pkgs.app2unit
             quickshell.packages.${system}.default
           ];
           shellHook = ''
-            export QML_IMPORT_PATH=.:${quickshell.packages.${system}.default}/lib/qt-6/qml:${pkgs.qt6.qtbase}/lib/qt-6/qml
+            export QML_IMPORT_PATH=.:${
+              quickshell.packages.${system}.default
+            }/lib/qt-6/qml:${pkgs.qt6.qtbase}/lib/qt-6/qml
             export QT_PLUGIN_PATH=${pkgs.qt6.qtbase}/lib/qt-6/plugins
             printf "%s\n" \
               "[General]" \
