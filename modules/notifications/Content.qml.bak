@@ -1,0 +1,110 @@
+import Quickshell
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import qs.Services
+import qs.Components
+import qs.Config
+
+Item {
+    id: root
+
+    readonly property var notifs: Notifs
+    required property PersistentProperties visibilities
+    readonly property int padding: Config.style.paddingLarge
+    readonly property int rounding: Config.style.roundingLarge
+
+    // Safe color accessors with fallbacks
+    readonly property color textColor: "#ffffff"
+    readonly property color accentColor: "#a6e3a1"
+    readonly property color urgentColor: "#f38ba8"
+    readonly property color surfaceColor: "#1e1e2e"
+
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 20
+        spacing: 16
+
+        // Header with title and actions
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 12
+
+            Text {
+                text: "Notifications"
+                font.pixelSize: 20
+                font.weight: Font.Bold
+                color: root.textColor
+                Layout.fillWidth: true
+            }
+
+            // DND Toggle
+            Rectangle {
+                width: 36
+                height: 36
+                radius: 18
+                color: notifs.dnd ? root.accentColor : Qt.rgba(1, 1, 1, 0.1)
+
+                Text {
+                    anchors.centerIn: parent
+                    text: notifs.dnd ? "󰂛" : "󰂚"
+                    font.family: "Material Design Icons"
+                    font.pixelSize: 18
+                    color: notifs.dnd ? "#000000" : root.textColor
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: notifs.toggleDnd()
+                }
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+            }
+
+            // Clear All Button
+            Rectangle {
+                width: 36
+                height: 36
+                radius: 18
+                color: Qt.rgba(1, 1, 1, 0.1)
+                visible: (notifs.recentNotifications?.length ?? 0) > 0
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "󰎟"
+                    font.family: "Material Design Icons"
+                    font.pixelSize: 18
+                    color: root.textColor
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        console.log("🗑️ Clearing all notifications");
+                        notifs.clearAll();
+                    }
+                }
+            }
+        }
+
+        // Notifications List
+        
+
+        // DND Status Text
+        Text {
+            Layout.fillWidth: true
+            text: notifs.dnd ? "󰂛 Do Not Disturb enabled - notifications are silenced" : ""
+            font.pixelSize: 12
+            color: root.accentColor
+            horizontalAlignment: Text.AlignHCenter
+            visible: notifs.dnd
+            opacity: 0.8
+        }
+    }
+}
