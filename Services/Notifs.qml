@@ -8,7 +8,7 @@ Singleton {
     id: root
 
     // All notifications (QtObjects)
-    property list<QtObject> notifications: []
+    property list<Item> notifications: []
 
     // Maximum notifications to keep
     readonly property int maxNotifications: 100
@@ -20,7 +20,9 @@ Singleton {
     property var recentNotifications: []
 
     // Reactive active notifications (not closed)
-    readonly property var activeNotifications: notifications.filter(n => !n.closed)
+    readonly property list<var> newNotifications: notifications.filter(n => !n.expired && !n.closed)
+    readonly property var openNotifications: notifications.filter(n => !n.closed)
+    readonly property var closedNotifications: notifications.filter(n => n.closed)
 
     // --- Update function ---
     function updateRecent() {
@@ -80,12 +82,13 @@ Singleton {
     // --- Notification object ---
     Component {
         id: notifComponent
-        QtObject {
+        Item {
             id: notifWrapper
 
             property var notification
             property date timestamp: new Date()
             property bool closed: false
+            property bool expired: false
 
             property string id: ""
             property string summary: ""
@@ -115,6 +118,15 @@ Singleton {
             function invokeAction(actionId) {
                 const action = actions.find(a => a.identifier === actionId);
                 if (action && action.invoke) action.invoke();
+            }
+
+            Timer {
+                interval: 5000
+                running: true
+                repeat: false
+                onTriggered: {
+                    expired = true;
+                }
             }
 
             Component.onCompleted: {

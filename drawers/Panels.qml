@@ -1,5 +1,6 @@
 import qs.Services
 import qs.Config
+import qs.drawers.panels.bottomLeft
 import qs.modules.audio
 import qs.modules.dateTime
 import qs.modules.launcher
@@ -32,6 +33,19 @@ Item {
         visibility: true
 
         anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -6
+    }
+    
+    BottomLeft {
+        id: bottomLeft
+
+        screen: root.screen
+        //todo don't hardcode this
+        //visibility: root.visibilities.audio
+        visibility: true
+
+        anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -6
     }
@@ -80,12 +94,12 @@ Item {
         anchors.right: parent.right
     }
 
-    Notifications {
+    /*Notifications {
         id: notifications
 
         visibilities: root.visibilities
 
         anchors.top: parent.top
         anchors.right: parent.right
-    }
+    }*/
 }

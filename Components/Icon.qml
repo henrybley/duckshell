@@ -6,7 +6,7 @@ StyledText {
     property int grade: Colours.light ? 0 : -25
 
     font.family: Config.style.fontFamilyIcons
-    font.pixelSize: Config.style.fontSizeLarge
+    font.pixelSize: Config.style.fontSizeLarger
 
     font.variableAxes: ({
             FILL: fill.toFixed(1),
