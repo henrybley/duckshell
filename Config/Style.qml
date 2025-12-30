@@ -27,7 +27,7 @@ Scope {
             property int borderThickness: 15
             property int borderRounding: 8
             
-            property int roundingSmall: 15
+            property int roundingSmall: 8
             property int roundingNormal: 15
             property int roundingLarge: 25
             property int roundingFull: 1000

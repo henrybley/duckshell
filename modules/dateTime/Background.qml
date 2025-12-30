@@ -8,7 +8,7 @@ Shape {
 
     required property real contentWidth
     required property real contentHeight
-    readonly property real rounding: Config.style.roundingSmall/2
+    readonly property real rounding: Config.style.roundingSmall
 
     ShapePath {
         id: shapePath
