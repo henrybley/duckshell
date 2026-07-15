@@ -41,6 +41,8 @@ Singleton {
             return;
         }
 
+        //Sounds.notify();
+
         const notifWrapper = notifComponent.createObject(root, { notification: notif });
 
         notifications = [notifWrapper, ...notifications].slice(0, maxNotifications);

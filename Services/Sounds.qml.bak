@@ -1,0 +1,82 @@
+pragma Singleton
+
+import QtQuick
+import QtMultimedia
+
+QtObject {
+    id: sounds
+
+    /* ==========================
+       Configuration
+       ========================== */
+
+    property real volume: 0.7
+    property bool enabled: true
+
+    function url(file) {
+        return Qt.resolvedUrl("../../sounds/" + file)
+    }
+
+    /* ==========================
+       Sound Effects
+       ========================== */
+
+    SoundEffect {
+        id: notifySound
+        source: url("ui_opening_7.mp3")
+        volume: sounds.volume
+    }
+
+    SoundEffect {
+        id: errorSound
+        source: url("error.wav")
+        volume: sounds.volume
+    }
+
+    SoundEffect {
+        id: successSound
+        source: url("success.wav")
+        volume: sounds.volume
+    }
+
+    SoundEffect {
+        id: warningSound
+        source: url("warning.wav")
+        volume: sounds.volume
+    }
+
+    /* ==========================
+       Public API
+       ========================== */
+
+    function notify() {
+        if (!enabled) return
+        notifySound.play()
+    }
+
+    function error() {
+        if (!enabled) return
+        errorSound.play()
+    }
+
+    function success() {
+        if (!enabled) return
+        successSound.play()
+    }
+
+    function warning() {
+        if (!enabled) return
+        warningSound.play()
+    }
+
+    /* ==========================
+       Utility
+       ========================== */
+
+    function stopAll() {
+        notifySound.stop()
+        errorSound.stop()
+        successSound.stop()
+        warningSound.stop()
+    }
+}

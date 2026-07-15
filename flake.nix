@@ -48,7 +48,6 @@
             pkgs.qt6.qtbase
             pkgs.qt6.qtdeclarative
             pkgs.qt6.qtwayland
-            pkgs.app2unit
             quickshell.packages.${system}.default
           ];
           shellHook = ''

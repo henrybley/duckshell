@@ -2,6 +2,7 @@ import qs.Services
 import qs.Config
 import qs.Components
 import qs.modules.battery
+import qs.modules.timers
 import qs.modules.notifications
 import Quickshell
 import QtQuick
@@ -14,10 +15,10 @@ Item {
     enum OpenPanel {
         None,
         Battery,
-        Notifications
+        Notifications,
+        Timers
     }
     property int openPanel: BottomLeft.OpenPanel.None
-
 
     visible: width > 0
     implicitWidth: 0
@@ -59,7 +60,6 @@ Item {
         }
     ]
 
-
     Background {
         contentWidth: content.width
         contentHeight: content.height
@@ -73,7 +73,7 @@ Item {
             implicitWidth: batteryDetailsContent.width
             implicitHeight: batteryDetailsContent.height
             visible: root.openPanel == BottomLeft.OpenPanel.Battery
-            
+
             BatteryDetails {
                 id: batteryDetailsContent
             }
@@ -83,12 +83,22 @@ Item {
             implicitWidth: notificationDetailsContent.width
             implicitHeight: notificationDetailsContent.height
             //visible: root.openPanel == BottomLeft.OpenPanel.Notifications
-            
+
             NotificationDetails {
                 id: notificationDetailsContent
             }
         }
 
+        Item {
+            id: timersDetails
+            implicitWidth: timerDetailsContent.width
+            implicitHeight: timerDetailsContent.height
+            visible: root.openPanel === BottomLeft.OpenPanel.Timers
+
+            TimersDetails {
+                id: timerDetailsContent
+            }
+        }
         Item {
             implicitWidth: bottomLeftItems.implicitWidth
             implicitHeight: bottomLeftItems.implicitHeight
@@ -104,20 +114,33 @@ Item {
                         onClicked: root.openPanel == BottomLeft.OpenPanel.Battery ? root.openPanel = BottomLeft.OpenPanel.None : root.openPanel = BottomLeft.OpenPanel.Battery
                     }
                 }
-                Icon { 
+                Icon {
+                    id: notificationsIcon
                     anchors.bottom: parent.bottom
                     text: Notifs.dnd ? "notifications_off" : Notifs.openNotifications.length > 0 ? "notifications_unread" : "notifications"
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            root.openPanel == BottomLeft.OpenPanel.Notifications ? root.openPanel = BottomLeft.OpenPanel.None : root.openPanel = BottomLeft.OpenPanel.Notifications
-                            notificationDetailsContent.viewState = (notificationDetailsContent.viewState === NotificationDetails.ViewState.New) 
-                                ? NotificationDetails.ViewState.Open 
-                                : NotificationDetails.ViewState.New
+                            root.openPanel == BottomLeft.OpenPanel.Notifications ? root.openPanel = BottomLeft.OpenPanel.None : root.openPanel = BottomLeft.OpenPanel.Notifications;
+                            notificationDetailsContent.viewState = (notificationDetailsContent.viewState === NotificationDetails.ViewState.New) ? NotificationDetails.ViewState.Open : NotificationDetails.ViewState.New;
                         }
-
                     }
                     font.pixelSize: root.openPanel == BottomLeft.OpenPanel.Notifications ? Config.style.fontSizeLarge : Config.style.fontSizeLarger
+                }
+                Icon {
+                    id: clockIcon
+                    anchors.bottom: parent.bottom
+                    text: "schedule"
+                    font.pixelSize: root.openPanel == BottomLeft.OpenPanel.Timers ? Config.style.fontSizeLarge : Config.style.fontSizeLarger
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: root.openPanel = (root.openPanel === BottomLeft.OpenPanel.Timers) ? BottomLeft.OpenPanel.None : BottomLeft.OpenPanel.Timers
+                    }
+                }
+                Timers {
+                    id: timers
+                    anchors.bottom: parent.bottom
+                    active: root.openPanel === BottomLeft.OpenPanel.Timers
                 }
             }
         }
